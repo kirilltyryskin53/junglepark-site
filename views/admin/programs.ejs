@@ -1,0 +1,68 @@
+<%- include('../partials/header', { lang, siteName, t, currentPath, requestPath }) %>
+<section class="admin-wrapper">
+  <div class="admin-card">
+    <div style="display:flex;justify-content:space-between;align-items:center;">
+      <h2><%= t('programsTitle') %></h2>
+      <a class="btn btn-outline" href="/admin/dashboard?lang=<%= lang %>"><%= t('dashboard') %></a>
+    </div>
+    <% if (!programs.length) { %>
+    <p><%= t('emptyState') %></p>
+    <% } %>
+    <% programs.forEach(function(program){ %>
+    <form class="admin-card" style="margin-top:1rem;" method="post" action="/admin/programs/<%= program.id %>?lang=<%= lang %>">
+      <div class="grid-two">
+        <div>
+          <label>RU <%= t('title') %></label>
+          <input class="form-control" type="text" name="titleRu_<%= program.id %>" value="<%= program.title.ru %>" />
+        </div>
+        <div>
+          <label>KZ <%= t('title') %></label>
+          <input class="form-control" type="text" name="titleKk_<%= program.id %>" value="<%= program.title.kk %>" />
+        </div>
+      </div>
+      <label>RU <%= t('description') %></label>
+      <textarea class="form-control" name="descriptionRu_<%= program.id %>"><%= program.description.ru %></textarea>
+      <label>KZ <%= t('description') %></label>
+      <textarea class="form-control" name="descriptionKk_<%= program.id %>"><%= program.description.kk %></textarea>
+      <div class="grid-two">
+        <div>
+          <label><%= t('price') %></label>
+          <input class="form-control" type="number" name="price_<%= program.id %>" value="<%= program.price %>" />
+        </div>
+        <div style="display:flex;align-items:center;gap:0.5rem;">
+          <input type="checkbox" name="available_<%= program.id %>" <%= program.available ? 'checked' : '' %> />
+          <span><%= t('available') %></span>
+        </div>
+      </div>
+      <label><%= t('costumesLabel') %></label>
+      <input class="form-control" type="text" name="costumes_<%= program.id %>" value="<%= program.costumes.join(', ') %>" />
+      <div style="display:flex;gap:1rem;flex-wrap:wrap;margin-top:1rem;">
+        <button class="btn btn-primary" type="submit"><%= t('save') %></button>
+      </div>
+    </form>
+    <form method="post" action="/admin/programs/<%= program.id %>/delete?lang=<%= lang %>" onsubmit="return confirm('<%= t('deleteConfirm') %>');" style="margin-top:0.5rem;">
+      <button class="btn btn-outline" type="submit"><%= t('delete') %></button>
+    </form>
+    <% }) %>
+  </div>
+
+  <div class="admin-card">
+    <h3><%= t('addProgram') %></h3>
+    <form method="post" action="/admin/programs?lang=<%= lang %>">
+      <label>RU <%= t('title') %></label>
+      <input class="form-control" type="text" name="titleRu" required />
+      <label>KZ <%= t('title') %></label>
+      <input class="form-control" type="text" name="titleKk" required />
+      <label>RU <%= t('description') %></label>
+      <textarea class="form-control" name="descriptionRu" required></textarea>
+      <label>KZ <%= t('description') %></label>
+      <textarea class="form-control" name="descriptionKk" required></textarea>
+      <label><%= t('price') %></label>
+      <input class="form-control" type="number" name="price" required />
+      <label><%= t('costumesLabel') %></label>
+      <input class="form-control" type="text" name="costumes" />
+      <button class="btn btn-primary" type="submit"><%= t('save') %></button>
+    </form>
+  </div>
+</section>
+<%- include('../partials/footer', { t }) %>

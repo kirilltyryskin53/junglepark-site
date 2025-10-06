@@ -1,0 +1,17 @@
+<%- include('../partials/header', { lang, siteName, t, currentPath, requestPath }) %>
+<section class="admin-wrapper">
+  <div class="admin-card">
+    <div style="display:flex;justify-content:space-between;align-items:center;">
+      <h2><%= t('maintenanceControl') %></h2>
+      <a class="btn btn-outline" href="/admin/dashboard?lang=<%= lang %>"><%= t('dashboard') %></a>
+    </div>
+    <form method="post" action="/admin/maintenance?lang=<%= lang %>">
+      <div style="display:flex;align-items:center;gap:0.75rem;margin:1rem 0;">
+        <input type="checkbox" name="maintenance" id="maintenance" <%= settings.maintenance ? 'checked' : '' %> />
+        <label for="maintenance" style="margin:0;"><%= settings.maintenance ? t('maintenanceDisable') : t('maintenanceEnable') %></label>
+      </div>
+      <button class="btn btn-primary" type="submit"><%= t('update') %></button>
+    </form>
+  </div>
+</section>
+<%- include('../partials/footer', { t }) %>
