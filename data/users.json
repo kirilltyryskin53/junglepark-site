@@ -1,9 +1,9 @@
 [
   {
-    "id": "3aa38d8d-d704-4e41-bcfb-d5cada4ec0c1",
+    "id": "root",
     "username": "root",
-    "passwordHash": "$2b$10$9xjjwTaadEZitK/IkpNFgebHc0VW9QE1KY7dJJaFNx3npeUxs2DGC",
+    "password_hash": "KrZ4TC8313Dtul/C4TAOWA==:H/fsTgCXAJDuMPpzgypDT4tC8abjsnrX8+DLg0+nsuo=",
     "role": "Administrator",
-    "mustChangePassword": true
+    "must_change_password": true
   }
 ]
