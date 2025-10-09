@@ -1,0 +1,9 @@
+[
+  {
+    "id": "root",
+    "username": "root",
+    "password_hash": "KrZ4TC8313Dtul/C4TAOWA==:H/fsTgCXAJDuMPpzgypDT4tC8abjsnrX8+DLg0+nsuo=",
+    "role": "Administrator",
+    "must_change_password": true
+  }
+]

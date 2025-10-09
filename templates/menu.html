@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="page-intro">
+    <div class="container">
+        <h1>{{ t('menuTitle') }}</h1>
+        <p>{{ t('menuSubtitle') }}</p>
+    </div>
+</section>
+<section class="container menu-layout" data-menu-page data-add-item="{{ add_item or '' }}">
+    <div class="menu-grid">
+        {% if menu %}
+            {% for item in menu %}
+                <article class="card menu-card" data-menu-item data-item-id="{{ item.id }}" data-item-name="{{ item.title.get(lang, item.title.get('ru')) }}" data-item-price="{{ item.price }}">
+                    <h2>{{ item.title.get(lang, item.title.get('ru')) }}</h2>
+                    <p>{{ item.description.get(lang, item.description.get('ru')) }}</p>
+                    <div class="menu-card-footer">
+                        <span class="price">{{ item.price }} тг</span>
+                        <button class="btn small" data-add-to-cart>{{ t('orderButton') }}</button>
+                    </div>
+                </article>
+            {% endfor %}
+        {% else %}
+            <p class="empty-state">{{ t('noItems') }}</p>
+        {% endif %}
+    </div>
+    <aside class="cart" aria-labelledby="cartTitle">
+        <h2 id="cartTitle">{{ t('cartTitle') }}</h2>
+        <ul class="cart-list" data-cart-items></ul>
+        <dl class="cart-summary">
+            <div>
+                <dt>{{ t('cartSubtotal') }}</dt>
+                <dd data-cart-subtotal>0 тг</dd>
+            </div>
+            <div>
+                <dt>{{ t('deliveryLabel') }}</dt>
+                <dd data-cart-delivery>0 тг</dd>
+            </div>
+            <div class="cart-total">
+                <dt>{{ t('totalLabel') }}</dt>
+                <dd data-cart-total>0 тг</dd>
+            </div>
+        </dl>
+        <button class="btn full" data-open-order disabled>{{ t('checkout') }}</button>
+    </aside>
+</section>
+<div class="modal order-modal" hidden>
+    <div class="modal-dialog">
+        <button class="modal-close" data-close-modal aria-label="{{ t('close') }}">×</button>
+        <h2>{{ t('orderModalTitle') }}</h2>
+        <form data-order-form>
+            <div class="form-group">
+                <label for="orderAddress">{{ t('addressLabel') }}</label>
+                <input id="orderAddress" name="address" required>
+            </div>
+            <div class="form-group">
+                <label for="orderPhone">{{ t('phoneLabel') }}</label>
+                <input id="orderPhone" name="phone" required>
+            </div>
+            <p class="form-status" role="status" hidden></p>
+            <button type="submit" class="btn full">{{ t('submitOrder') }}</button>
+        </form>
+    </div>
+</div>
+{% endblock %}

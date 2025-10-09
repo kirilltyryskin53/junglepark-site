@@ -1,0 +1,8 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="container error-page">
+    <h1>404</h1>
+    <p>{{ t('error404') }}</p>
+    <a class="btn" href="{{ url_for('home') }}">{{ t('backHome') }}</a>
+</section>
+{% endblock %}

@@ -1,0 +1,129 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="container admin-section">
+    <header class="section-header">
+        <h1>{{ t('bannersSection') }}</h1>
+        <a class="btn small" href="{{ url_for('admin_dashboard') }}">{{ t('backDashboard') }}</a>
+    </header>
+    <div class="card">
+        <h2>{{ t('createBanner') }}</h2>
+        <form method="post" class="form-grid">
+            <input type="hidden" name="action" value="create">
+            <div class="form-group">
+                <label for="bannerType">{{ t('bannerTypeLabel') }}</label>
+                <select id="bannerType" name="type">
+                    <option value="seasonal">{{ t('bannerSeasonal') }}</option>
+                    <option value="discount">{{ t('bannerDiscount') }}</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="bannerTitleRu">{{ t('titleRu') }}</label>
+                <input id="bannerTitleRu" name="title_ru" required>
+            </div>
+            <div class="form-group">
+                <label for="bannerTitleKk">{{ t('titleKk') }}</label>
+                <input id="bannerTitleKk" name="title_kk" required>
+            </div>
+            <div class="form-group">
+                <label for="bannerDescRu">{{ t('descriptionRu') }}</label>
+                <textarea id="bannerDescRu" name="description_ru" required></textarea>
+            </div>
+            <div class="form-group">
+                <label for="bannerDescKk">{{ t('descriptionKk') }}</label>
+                <textarea id="bannerDescKk" name="description_kk" required></textarea>
+            </div>
+            <div class="conditional" data-conditional="seasonal">
+                <div class="form-group">
+                    <label for="bannerProgram">{{ t('bannerProgramLabel') }}</label>
+                    <select id="bannerProgram" name="program_id">
+                        {% for program in programs %}
+                            <option value="{{ program.id }}">{{ program.title.get(lang, program.title.get('ru')) }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="bannerCtaRu">{{ t('ctaRu') }}</label>
+                    <input id="bannerCtaRu" name="cta_ru">
+                </div>
+                <div class="form-group">
+                    <label for="bannerCtaKk">{{ t('ctaKk') }}</label>
+                    <input id="bannerCtaKk" name="cta_kk">
+                </div>
+            </div>
+            <div class="conditional" data-conditional="discount" hidden>
+                <div class="form-group">
+                    <label for="bannerMenu">{{ t('bannerMenuLabel') }}</label>
+                    <select id="bannerMenu" name="menu_item_id">
+                        {% for item in menu %}
+                            <option value="{{ item.id }}">{{ item.title.get(lang, item.title.get('ru')) }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+            <button class="btn" type="submit">{{ t('createButton') }}</button>
+        </form>
+    </div>
+    <div class="card">
+        <h2>{{ t('existingBanners') }}</h2>
+        {% for banner in banners %}
+            <form method="post" class="form-grid bordered" data-banner-type="{{ banner.type }}">
+                <input type="hidden" name="action" value="update">
+                <input type="hidden" name="banner_id" value="{{ banner.id }}">
+                <div class="form-group">
+                    <label>{{ t('bannerTypeLabel') }}</label>
+                    <p>{{ banner.type == 'seasonal' and t('bannerSeasonal') or t('bannerDiscount') }}</p>
+                </div>
+                <div class="form-group">
+                    <label>{{ t('titleRu') }}</label>
+                    <input name="title_ru" value="{{ banner.get('title_ru') }}" required>
+                </div>
+                <div class="form-group">
+                    <label>{{ t('titleKk') }}</label>
+                    <input name="title_kk" value="{{ banner.get('title_kk') }}" required>
+                </div>
+                <div class="form-group">
+                    <label>{{ t('descriptionRu') }}</label>
+                    <textarea name="description_ru" required>{{ banner.get('description_ru') }}</textarea>
+                </div>
+                <div class="form-group">
+                    <label>{{ t('descriptionKk') }}</label>
+                    <textarea name="description_kk" required>{{ banner.get('description_kk') }}</textarea>
+                </div>
+                {% if banner.type == 'seasonal' %}
+                <div class="form-group">
+                    <label>{{ t('bannerProgramLabel') }}</label>
+                    <select name="program_id">
+                        {% for program in programs %}
+                            <option value="{{ program.id }}" {% if banner.get('program_id') == program.id %}selected{% endif %}>{{ program.title.get(lang, program.title.get('ru')) }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>{{ t('ctaRu') }}</label>
+                    <input name="cta_ru" value="{{ banner.get('cta_label_ru', '') }}">
+                </div>
+                <div class="form-group">
+                    <label>{{ t('ctaKk') }}</label>
+                    <input name="cta_kk" value="{{ banner.get('cta_label_kk', '') }}">
+                </div>
+                {% else %}
+                <div class="form-group">
+                    <label>{{ t('bannerMenuLabel') }}</label>
+                    <select name="menu_item_id">
+                        {% for item in menu %}
+                            <option value="{{ item.id }}" {% if banner.get('menu_item_id') == item.id %}selected{% endif %}>{{ item.title.get(lang, item.title.get('ru')) }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                {% endif %}
+                <div class="form-actions">
+                    <button class="btn small" type="submit">{{ t('updateButton') }}</button>
+                    <button class="btn small danger" name="action" value="delete" formaction="{{ url_for('admin_banners') }}" formmethod="post" onclick="return confirm('{{ t('confirmDelete') }}')">{{ t('deleteButton') }}</button>
+                </div>
+            </form>
+        {% else %}
+            <p class="empty-state">{{ t('noBanners') }}</p>
+        {% endfor %}
+    </div>
+</section>
+{% endblock %}

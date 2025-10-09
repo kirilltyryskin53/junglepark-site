@@ -1,0 +1,101 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="hero">
+    <div class="container hero-inner">
+        <div>
+            <h1>{{ t('welcomeTitle') }}</h1>
+            <p>{{ t('welcomeSubtitle') }}</p>
+            <div class="hero-actions">
+                <a class="btn" href="{{ url_for('menu') }}">{{ t('menuButton') }}</a>
+                <a class="btn outline" href="{{ url_for('programs') }}">{{ t('programButton') }}</a>
+                <a class="btn whatsapp" href="https://wa.me/77055619337" target="_blank" rel="noopener">{{ t('contactButton') }}</a>
+            </div>
+        </div>
+        <div class="hero-visual" aria-hidden="true"></div>
+    </div>
+</section>
+<section class="banners container">
+    <h2>{{ t('seasonalHighlights') }}</h2>
+    <div class="banner-grid">
+        {% for banner in banners %}
+            {% if banner.type == 'seasonal' %}
+                <article class="banner-card seasonal" data-banner-id="{{ banner.id }}">
+                    <div class="banner-content">
+                        <h3>{{ banner.get('title_' ~ lang, banner.get('title_ru')) or banner.get('title_ru') }}</h3>
+                        <p>{{ banner.get('description_' ~ lang, banner.get('description_ru')) or banner.get('description_ru') }}</p>
+                    </div>
+                    <button class="banner-cta" data-seasonal-trigger data-banner-id="{{ banner.id }}" data-banner-title="{{ banner.get('title_' ~ lang, banner.get('title_ru')) or banner.get('title_ru') }}">{{ banner.get('cta_label_' ~ lang, banner.get('cta_label_ru', t('signup'))) }}</button>
+                </article>
+            {% else %}
+                <article class="banner-card discount" data-discount data-item-id="{{ banner.menu_item_id }}">
+                    <div class="banner-content">
+                        <h3>{{ banner.get('title_' ~ lang, banner.get('title_ru')) or banner.get('title_ru') }}</h3>
+                        <p>{{ banner.get('description_' ~ lang, banner.get('description_ru')) or banner.get('description_ru') }}</p>
+                        <span class="discount-note">{{ t('discountBannerHint') }}</span>
+                    </div>
+                </article>
+            {% endif %}
+        {% endfor %}
+        {% if not banners %}
+            <p class="empty-state">{{ t('noBanners') }}</p>
+        {% endif %}
+    </div>
+</section>
+<section class="highlight container">
+    <h2>{{ t('menuPreviewTitle') }}</h2>
+    <div class="card-grid">
+        {% for item in menu[:3] %}
+            <article class="card">
+                <h3>{{ item.title.get(lang, item.title.get('ru')) }}</h3>
+                <p>{{ item.description.get(lang, item.description.get('ru')) }}</p>
+                <span class="price">{{ item.price }} тг</span>
+            </article>
+        {% endfor %}
+        {% if menu|length == 0 %}
+            <p class="empty-state">{{ t('noItems') }}</p>
+        {% endif %}
+    </div>
+</section>
+<section class="highlight container">
+    <h2>{{ t('programPreviewTitle') }}</h2>
+    <div class="card-grid">
+        {% for program in programs[:3] %}
+            <article class="card">
+                <h3>{{ program.title.get(lang, program.title.get('ru')) }}</h3>
+                <p>{{ program.description.get(lang, program.description.get('ru')) }}</p>
+                <span class="price">{{ program.price }} тг</span>
+            </article>
+        {% endfor %}
+        {% if programs|length == 0 %}
+            <p class="empty-state">{{ t('noPrograms') }}</p>
+        {% endif %}
+    </div>
+</section>
+<div class="modal seasonal-modal" hidden>
+    <div class="modal-dialog">
+        <button class="modal-close" data-close-modal aria-label="{{ t('close') }}">×</button>
+        <h2 class="modal-title" data-modal-title>{{ t('seasonalModalTitle') }}</h2>
+        <form data-seasonal-form>
+            <div class="form-group">
+                <label for="parentName">{{ t('parentNameLabel') }}</label>
+                <input id="parentName" name="parentName" required>
+            </div>
+            <div class="form-group">
+                <label for="childName">{{ t('childNameLabel') }}</label>
+                <input id="childName" name="childName" required>
+            </div>
+            <div class="form-group">
+                <label for="age">{{ t('ageLabel') }}</label>
+                <input id="age" name="age" required>
+            </div>
+            <div class="form-group">
+                <label for="phone">{{ t('phoneLabel') }}</label>
+                <input id="phone" name="phone" required>
+            </div>
+            <input type="hidden" name="bannerId" id="bannerId">
+            <button type="submit" class="btn">{{ t('submitSeasonal') }}</button>
+        </form>
+        <p class="form-status" role="status" hidden></p>
+    </div>
+</div>
+{% endblock %}

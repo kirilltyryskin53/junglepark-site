@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="page-intro">
+    <div class="container">
+        <h1>{{ t('programsTitle') }}</h1>
+        <p>{{ t('programSubtitle') }}</p>
+    </div>
+</section>
+<section class="container program-grid" data-program-page>
+    {% if programs %}
+        {% for program in programs %}
+            <article class="card program-card" data-program-id="{{ program.id }}" data-program-name="{{ program.title.get(lang, program.title.get('ru')) }}">
+                <header>
+                    <h2>{{ program.title.get(lang, program.title.get('ru')) }}</h2>
+                    <span class="price">{{ program.price }} тг</span>
+                </header>
+                <p>{{ program.description.get(lang, program.description.get('ru')) }}</p>
+                {% if program.costumes %}
+                    <p class="costumes"><strong>{{ t('costumes') }}:</strong> {{ program.costumes | join(', ') }}</p>
+                {% endif %}
+                <button class="btn full" data-request-program>{{ t('programCta') }}</button>
+            </article>
+        {% endfor %}
+    {% else %}
+        <p class="empty-state">{{ t('noPrograms') }}</p>
+    {% endif %}
+</section>
+<div class="modal program-modal" hidden>
+    <div class="modal-dialog">
+        <button class="modal-close" data-close-modal aria-label="{{ t('close') }}">×</button>
+        <h2 data-modal-title>{{ t('programModalTitle') }}</h2>
+        <form data-program-form>
+            <div class="form-group">
+                <label for="programParentName">{{ t('parentNameLabel') }}</label>
+                <input id="programParentName" name="name" required>
+            </div>
+            <div class="form-group">
+                <label for="programChildName">{{ t('childNameLabel') }}</label>
+                <input id="programChildName" name="childName" required>
+            </div>
+            <div class="form-group">
+                <label for="programPhone">{{ t('phoneLabel') }}</label>
+                <input id="programPhone" name="phone" required>
+            </div>
+            <div class="form-group">
+                <label for="programDate">{{ t('dateLabel') }}</label>
+                <input id="programDate" name="date" type="date" required>
+            </div>
+            <input type="hidden" name="programId" id="programId">
+            <p class="form-status" role="status" hidden></p>
+            <button type="submit" class="btn full">{{ t('submitProgram') }}</button>
+        </form>
+    </div>
+</div>
+{% endblock %}

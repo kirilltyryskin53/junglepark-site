@@ -1,0 +1,83 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="container admin-section">
+    <header class="section-header">
+        <h1>{{ t('menuSection') }}</h1>
+        <a class="btn small" href="{{ url_for('admin_dashboard') }}">{{ t('backDashboard') }}</a>
+    </header>
+    <div class="card">
+        <h2>{{ t('createMenuItem') }}</h2>
+        <form method="post" class="form-grid">
+            <input type="hidden" name="action" value="create">
+            <div class="form-group">
+                <label for="menuTitleRu">{{ t('titleRu') }}</label>
+                <input id="menuTitleRu" name="title_ru" required>
+            </div>
+            <div class="form-group">
+                <label for="menuTitleKk">{{ t('titleKk') }}</label>
+                <input id="menuTitleKk" name="title_kk" required>
+            </div>
+            <div class="form-group">
+                <label for="menuDescRu">{{ t('descriptionRu') }}</label>
+                <textarea id="menuDescRu" name="description_ru" required></textarea>
+            </div>
+            <div class="form-group">
+                <label for="menuDescKk">{{ t('descriptionKk') }}</label>
+                <textarea id="menuDescKk" name="description_kk" required></textarea>
+            </div>
+            <div class="form-group">
+                <label for="menuPrice">{{ t('priceLabel') }}</label>
+                <input id="menuPrice" name="price" type="number" min="0" required>
+            </div>
+            <div class="form-group checkbox">
+                <label>
+                    <input type="checkbox" name="available" checked>
+                    {{ t('availableLabel') }}
+                </label>
+            </div>
+            <button class="btn" type="submit">{{ t('createButton') }}</button>
+        </form>
+    </div>
+    <div class="card">
+        <h2>{{ t('existingMenu') }}</h2>
+        {% for item in menu %}
+            <form method="post" class="form-grid bordered">
+                <input type="hidden" name="action" value="update">
+                <input type="hidden" name="item_id" value="{{ item.id }}">
+                <div class="form-group">
+                    <label>{{ t('titleRu') }}</label>
+                    <input name="title_ru" value="{{ item.title.get('ru') }}" required>
+                </div>
+                <div class="form-group">
+                    <label>{{ t('titleKk') }}</label>
+                    <input name="title_kk" value="{{ item.title.get('kk') }}" required>
+                </div>
+                <div class="form-group">
+                    <label>{{ t('descriptionRu') }}</label>
+                    <textarea name="description_ru" required>{{ item.description.get('ru') }}</textarea>
+                </div>
+                <div class="form-group">
+                    <label>{{ t('descriptionKk') }}</label>
+                    <textarea name="description_kk" required>{{ item.description.get('kk') }}</textarea>
+                </div>
+                <div class="form-group">
+                    <label>{{ t('priceLabel') }}</label>
+                    <input name="price" type="number" min="0" value="{{ item.price }}" required>
+                </div>
+                <div class="form-group checkbox">
+                    <label>
+                        <input type="checkbox" name="available" {% if item.get('available') %}checked{% endif %}>
+                        {{ t('availableLabel') }}
+                    </label>
+                </div>
+                <div class="form-actions">
+                    <button class="btn small" type="submit">{{ t('updateButton') }}</button>
+                    <button class="btn small danger" name="action" value="delete" formaction="{{ url_for('admin_menu') }}" formmethod="post" onclick="return confirm('{{ t('confirmDelete') }}')">{{ t('deleteButton') }}</button>
+                </div>
+            </form>
+        {% else %}
+            <p class="empty-state">{{ t('noItems') }}</p>
+        {% endfor %}
+    </div>
+</section>
+{% endblock %}

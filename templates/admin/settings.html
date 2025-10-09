@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="container admin-section">
+    <header class="section-header">
+        <h1>{{ t('settingsSection') }}</h1>
+        <a class="btn small" href="{{ url_for('admin_dashboard') }}">{{ t('backDashboard') }}</a>
+    </header>
+    <div class="card">
+        <form method="post" class="form-grid">
+            <div class="form-group checkbox">
+                <label>
+                    <input type="checkbox" name="ownerAuthorized" {% if settings.get('ownerAuthorized') %}checked{% endif %}>
+                    {{ t('ownerAuthorizedLabel') }}
+                </label>
+            </div>
+            <div class="form-group">
+                <label for="cafeNumber">{{ t('cafeNumberLabel') }}</label>
+                <input id="cafeNumber" name="cafeNumber" value="{{ settings.get('cafeNumber') }}" required>
+            </div>
+            <div class="form-group">
+                <label for="cashierNumber">{{ t('cashierNumberLabel') }}</label>
+                <input id="cashierNumber" name="cashierNumber" value="{{ settings.get('cashierNumber') }}" required>
+            </div>
+            <button class="btn" type="submit">{{ t('saveSettings') }}</button>
+        </form>
+    </div>
+</section>
+{% endblock %}

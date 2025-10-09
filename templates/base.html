@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="{{ lang }}">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{{ t('siteName') }} - {{ title if title else t('siteName') }}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <script defer src="{{ url_for('static', filename='js/main.js') }}"></script>
+</head>
+<body data-lang="{{ lang }}">
+<header class="site-header">
+    <div class="container header-inner">
+        <a class="logo" href="{{ url_for('home') }}">Jungle Park</a>
+        <nav class="main-nav" aria-label="Main navigation">
+            <a href="{{ url_for('home') }}">{{ t('homeNav') }}</a>
+            <a href="{{ url_for('menu') }}">{{ t('menuNav') }}</a>
+            <a href="{{ url_for('programs') }}">{{ t('programNav') }}</a>
+            <a href="#contact">{{ t('contactNav') }}</a>
+        </nav>
+        <form class="language-switch" method="get" action="{{ request.path }}">
+            <label for="lang" class="visually-hidden">Language</label>
+            <select id="lang" name="lang" onchange="this.form.submit()">
+                {% for option in supported_languages %}
+                    <option value="{{ option }}" {% if option == lang %}selected{% endif %}>{{ option|upper }}</option>
+                {% endfor %}
+            </select>
+        </form>
+    </div>
+</header>
+<main>
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            <div class="flash-container container">
+                {% for category, message in messages %}
+                    <div class="flash flash-{{ category }}">{{ message }}</div>
+                {% endfor %}
+            </div>
+        {% endif %}
+    {% endwith %}
+    {% block content %}{% endblock %}
+</main>
+<footer id="contact" class="site-footer">
+    <div class="container footer-inner">
+        <div>
+            <h2>{{ t('contactFooterTitle') }}</h2>
+            <a class="whatsapp-link" href="https://wa.me/77055619337" target="_blank" rel="noopener">WhatsApp: +7 705 561 9337</a>
+        </div>
+        <p class="copyright">© Jungle Park, 2025<br>(Kirill Tyryshkkin)</p>
+    </div>
+</footer>
+</body>
+</html>

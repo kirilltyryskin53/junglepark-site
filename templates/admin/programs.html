@@ -1,0 +1,91 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="container admin-section">
+    <header class="section-header">
+        <h1>{{ t('programSection') }}</h1>
+        <a class="btn small" href="{{ url_for('admin_dashboard') }}">{{ t('backDashboard') }}</a>
+    </header>
+    <div class="card">
+        <h2>{{ t('createProgram') }}</h2>
+        <form method="post" class="form-grid">
+            <input type="hidden" name="action" value="create">
+            <div class="form-group">
+                <label for="programTitleRu">{{ t('titleRu') }}</label>
+                <input id="programTitleRu" name="title_ru" required>
+            </div>
+            <div class="form-group">
+                <label for="programTitleKk">{{ t('titleKk') }}</label>
+                <input id="programTitleKk" name="title_kk" required>
+            </div>
+            <div class="form-group">
+                <label for="programDescRu">{{ t('descriptionRu') }}</label>
+                <textarea id="programDescRu" name="description_ru" required></textarea>
+            </div>
+            <div class="form-group">
+                <label for="programDescKk">{{ t('descriptionKk') }}</label>
+                <textarea id="programDescKk" name="description_kk" required></textarea>
+            </div>
+            <div class="form-group">
+                <label for="programPrice">{{ t('priceLabel') }}</label>
+                <input id="programPrice" name="price" type="number" min="0" required>
+            </div>
+            <div class="form-group">
+                <label for="programCostumes">{{ t('costumesLabel') }}</label>
+                <input id="programCostumes" name="costumes" placeholder="{{ t('costumePlaceholder') }}">
+            </div>
+            <div class="form-group checkbox">
+                <label>
+                    <input type="checkbox" name="available" checked>
+                    {{ t('availableLabel') }}
+                </label>
+            </div>
+            <button class="btn" type="submit">{{ t('createButton') }}</button>
+        </form>
+    </div>
+    <div class="card">
+        <h2>{{ t('existingPrograms') }}</h2>
+        {% for program in programs %}
+            <form method="post" class="form-grid bordered">
+                <input type="hidden" name="action" value="update">
+                <input type="hidden" name="program_id" value="{{ program.id }}">
+                <div class="form-group">
+                    <label>{{ t('titleRu') }}</label>
+                    <input name="title_ru" value="{{ program.title.get('ru') }}" required>
+                </div>
+                <div class="form-group">
+                    <label>{{ t('titleKk') }}</label>
+                    <input name="title_kk" value="{{ program.title.get('kk') }}" required>
+                </div>
+                <div class="form-group">
+                    <label>{{ t('descriptionRu') }}</label>
+                    <textarea name="description_ru" required>{{ program.description.get('ru') }}</textarea>
+                </div>
+                <div class="form-group">
+                    <label>{{ t('descriptionKk') }}</label>
+                    <textarea name="description_kk" required>{{ program.description.get('kk') }}</textarea>
+                </div>
+                <div class="form-group">
+                    <label>{{ t('priceLabel') }}</label>
+                    <input name="price" type="number" min="0" value="{{ program.price }}" required>
+                </div>
+                <div class="form-group">
+                    <label>{{ t('costumesLabel') }}</label>
+                    <input name="costumes" value="{{ program.costumes | join(', ') }}">
+                </div>
+                <div class="form-group checkbox">
+                    <label>
+                        <input type="checkbox" name="available" {% if program.get('available') %}checked{% endif %}>
+                        {{ t('availableLabel') }}
+                    </label>
+                </div>
+                <div class="form-actions">
+                    <button class="btn small" type="submit">{{ t('updateButton') }}</button>
+                    <button class="btn small danger" name="action" value="delete" formaction="{{ url_for('admin_programs') }}" formmethod="post" onclick="return confirm('{{ t('confirmDelete') }}')">{{ t('deleteButton') }}</button>
+                </div>
+            </form>
+        {% else %}
+            <p class="empty-state">{{ t('noPrograms') }}</p>
+        {% endfor %}
+    </div>
+</section>
+{% endblock %}

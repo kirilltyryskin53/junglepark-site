@@ -1,0 +1,22 @@
+[
+  {
+    "id": "seasonal-1",
+    "type": "seasonal",
+    "title_ru": "Хэллоуин в Jungle Park",
+    "title_kk": "Jungle Park-та Хэллоуин",
+    "description_ru": "Страшно-весёлые приключения для детей!",
+    "description_kk": "Балаларға арналған қорқынышты әрі көңілді шытырман оқиға!",
+    "program_id": "p1",
+    "cta_label_ru": "Записаться",
+    "cta_label_kk": "Тіркелу"
+  },
+  {
+    "id": "discount-1",
+    "type": "discount",
+    "title_ru": "Скидка 20% на лимонады",
+    "title_kk": "Лимонадтарға 20% жеңілдік",
+    "description_ru": "Добавьте лимонад и получите скидку автоматически.",
+    "description_kk": "Лимонадты қосып, жеңілдікті бірден алыңыз.",
+    "menu_item_id": "1"
+  }
+]
