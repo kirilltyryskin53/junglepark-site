@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title data-i18n="home.meta.title">Jungle Парк | Праздники и шоу</title>
+  <meta
+    name="description"
+    content="Jungle Парк: дни рождения, шоу и кафе в Риддере."
+    data-i18n-attr="content:home.meta.description"
+  >
+  <link rel="icon" type="image/png" href="./favicon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./styles.css">
+  <script src="./script.js" defer></script>
+</head>
+<body>
+  <div class="page-shell">
+    <header class="site-header">
+      <a class="brand" href="./index.html" aria-label="Jungle Парк" data-i18n-attr="aria-label:common.brand.ariaLabel">
+        <img class="brand-logo" src="./logo.png" alt="Логотип Jungle Парк" data-i18n-attr="alt:common.brand.logoAlt">
+        <div class="brand-copy">
+          <strong>Jungle Парк</strong>
+          <span data-i18n="common.brand.tagline">Праздники и семейный отдых</span>
+        </div>
+      </a>
+
+      <div class="header-tools">
+        <nav class="main-nav" aria-label="Навигация" data-i18n-attr="aria-label:common.navigation.ariaLabel">
+          <a class="is-current" aria-current="page" href="./index.html" data-i18n="common.navigation.home">Главная</a>
+          <a href="./programs.html" data-i18n="common.navigation.programs">Программы</a>
+          <a href="./cafe.html" data-i18n="common.navigation.cafe">Кафе</a>
+        </nav>
+
+        <div class="lang-switcher" role="group" aria-label="Выбор языка" data-i18n-attr="aria-label:common.language.switcher">
+          <button class="lang-button is-active" type="button" data-lang-button="ru" aria-pressed="true">RU</button>
+          <button class="lang-button" type="button" data-lang-button="kk" aria-pressed="false">KZ</button>
+        </div>
+      </div>
+    </header>
+
+    <main class="page-main">
+      <section class="hero hero-simple">
+        <div class="hero-copy">
+          <h1 class="hero-title-inline">
+            <span data-i18n="home.hero.titlePrefix">Дни рождения. Шоу.</span>
+            <a class="hero-title-link" href="./cafe.html" data-i18n="home.hero.titleCafe">Кафе.</a>
+          </h1>
+          <p class="hero-subtitle" data-i18n="home.hero.subtitle">Риддер</p>
+
+          <div class="hero-buttons">
+            <a class="button button-primary" href="https://wa.me/77055619337" data-i18n="common.actions.whatsapp">WhatsApp</a>
+            <a class="button button-secondary" href="./programs.html" data-i18n="common.actions.programs">Программы</a>
+          </div>
+        </div>
+      </section>
+
+      <section class="content-block content-block-simple directory-card">
+        <div class="simple-directory">
+          <section class="directory-group">
+            <h2 class="directory-title" data-i18n="home.directory.programs.title">Программы</h2>
+            <div class="directory-links">
+              <a class="directory-link" href="./programs.html" data-i18n="home.directory.programs.link">перейти к программам</a>
+            </div>
+          </section>
+
+          <section class="directory-group">
+            <h2 class="directory-title" data-i18n="home.directory.contacts.title">Контакты</h2>
+            <div class="directory-links">
+              <a class="directory-link" href="https://wa.me/77055619337">WhatsApp</a>
+              <a class="directory-link" href="https://www.instagram.com/jungle_park_ridder/">Instagram</a>
+              <a class="directory-link" href="https://yandex.kz/maps/ru/-/CPbi7GyP" data-i18n="home.directory.contacts.map">Карта</a>
+            </div>
+          </section>
+
+          <section class="directory-group">
+            <h2 class="directory-title" data-i18n="home.directory.cafe.title">Кафе</h2>
+            <div class="directory-links">
+              <a class="directory-link" href="./cafe.html" data-i18n="home.directory.cafe.link">Меню и доставка</a>
+            </div>
+          </section>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="footer-grid footer-grid-simple">
+        <div class="footer-column">
+          <p class="footer-title">Jungle Park</p>
+          <a href="tel:+77055619337" data-i18n="common.footer.phone">+7 705 561 9337</a>
+          <a href="https://wa.me/77055619337">WhatsApp</a>
+        </div>
+        <div class="footer-column">
+          <a href="https://www.instagram.com/jungle_park_ridder/">Instagram</a>
+          <a href="https://yandex.kz/maps/ru/-/CPbi7GyP" data-i18n="common.footer.map">Карта</a>
+          <a href="./cafe.html" data-i18n="common.footer.delivery">Кафе и доставка</a>
+        </div>
+        <div class="footer-column footer-legal">
+          <p data-i18n="common.footer.copyright">© Jungle Park 2026</p>
+          <p data-i18n="common.footer.developed">Разработка: BigChanger</p>
+        </div>
+      </div>
+    </footer>
+  </div>
+</body>
+</html>
